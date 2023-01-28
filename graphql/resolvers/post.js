@@ -9,10 +9,14 @@ const uuid = require("uuid");
 module.exports = {
   Query: {
     // get a post from bucket list by its postId
-    postBucketList: async (_, { input }) => {
+    getPostBucketList: async (_, { input }) => {
       try {
         // checking database if the user exists
-        const post = await Post.findOne({ postId: input.postId });
+
+        const post = await Post.findOne({ postId: input.postId })
+          .populate("_user")
+          .exec();
+
         if (!post) {
           throw new Error("Post not found!");
         }
@@ -28,14 +32,27 @@ module.exports = {
         console.log(error);
       }
     },
-    postsBucketList: async () => {
+    getPostsBucketList: async () => {
       try {
-        // checking database if the users exists
-        const posts = await Post.find();
+        // get a list of posts from database
+        const posts = await Post.find().populate("_user").exec();
+
         if (!posts) {
           throw new Error("Posts not found!");
         }
-        return posts;
+        // Formatting the result in accordance with the schema [postsBuckletListPayload!]!
+        const newPosts = posts.map(post => {
+          return {
+            userErrors: [
+              {
+                message: "null",
+              },
+            ],
+            post: post,
+          };
+        });
+
+        return newPosts;
       } catch (error) {
         console.log(error);
       }
