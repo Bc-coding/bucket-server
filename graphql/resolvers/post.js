@@ -66,7 +66,7 @@ module.exports = {
 
         const postId = uuid.v4();
 
-        const newPost = new BucketListPost({
+        const newPost = new BucketList({
           ...input,
           postId: postId,
           _user: user.id,

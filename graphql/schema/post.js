@@ -9,7 +9,7 @@ extend type Mutation {
   }
 
   type BucketListPostPayload {
-    userErrors: [UserError!]!
+    userErrors: [UserError!]
     post: BucketListPost
   }
 
