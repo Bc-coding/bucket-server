@@ -8,6 +8,7 @@ const uuid = require("uuid");
 
 module.exports = {
   Query: {
+    // get a post from bucket list by its postId
     postBucketList: async (_, { input }) => {
       try {
         // checking database if the user exists
@@ -15,7 +16,14 @@ module.exports = {
         if (!post) {
           throw new Error("Post not found!");
         }
-        return post;
+        return {
+          userErrors: [
+            {
+              message: "null",
+            },
+          ],
+          post: post,
+        };
       } catch (error) {
         console.log(error);
       }
