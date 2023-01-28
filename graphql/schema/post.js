@@ -1,23 +1,23 @@
 module.exports = `
  extend type Query {
-    postPlacesToSee(input: postIdInput):  PlacesToSeePostPayload!
-    postsPlacesToSee: [PlacesToSeePostPayload!]!
+    postBucketList(input: postIdInput):  BucketListPostPayload!
+    postsBucketList: [BucketListPostPayload!]!
   }
 extend type Mutation {
-    createPlacesToSee(input: placesToSeeCreateInput):PlacesToSeePostPayload!
-    updatePlacesToSee(input: placesToSeeUpdateInput):PlacesToSeePostPayload!
+    createBucketList(input: bucketListCreateInput):BucketListPostPayload!
+    updateBucketList(input: bucketListUpdateInput):BucketListPostPayload!
   }
 
-  type PlacesToSeePostPayload {
+  type BucketListPostPayload {
     userErrors: [UserError!]!
-    post: PlacesToSeePost
+    post: BucketListPost
   }
 
   type UserError {
     message: String!
   }
 
-  type PlacesToSeePost {
+  type BucketListPost {
     id: ID!
     postId: String!
     title: String!
@@ -39,7 +39,7 @@ extend type Mutation {
     # posts: [Post!]
   }
 
-  input placesToSeeCreateInput {
+  input bucketListCreateInput {
     title: String!
     category: String!
     desc: String!
@@ -49,9 +49,9 @@ extend type Mutation {
     memo: String
   }
 
-  input placesToSeeUpdateInput {
+  input bucketListUpdateInput {
     postId: String!
-    post: placesToSeeCreateInput!
+    post: bucketListCreateInput!
   }
 
   input postIdInput {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const placesToSeePostSchema = new Schema(
+const bucketListSchema = new Schema(
   {
     postId: {
       type: String,
@@ -41,4 +41,4 @@ const placesToSeePostSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("placesToSeePost", placesToSeePostSchema);
+module.exports = mongoose.model("bucketList", bucketListSchema);

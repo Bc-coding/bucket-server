@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
-const PlacesToSeePost = mongoose.model("placesToSeePost");
+const bucketList = mongoose.model("bucketList");
 
 const canUserMutatePost = async ({ userInfo, postId }) => {
   const user = await User.findOne({ email: userInfo.email });
@@ -16,7 +16,7 @@ const canUserMutatePost = async ({ userInfo, postId }) => {
     };
   }
 
-  const post = await PlacesToSeePost.findOne({ postId });
+  const post = await bucketList.findOne({ postId });
 
   console.log(user._id);
   console.log(post._user._id);

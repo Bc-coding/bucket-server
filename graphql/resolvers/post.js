@@ -1,14 +1,14 @@
 // Getting data from database
-const PlacesToSeePost = require("../../database/models/PlacesToSeePost");
+const BucketList = require("../../database/models/BucketList");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
-const Post = mongoose.model("placesToSeePost");
+const Post = mongoose.model("bucketList");
 const canUserMutatePost = require("../../utils/canUserMutatePost");
 const uuid = require("uuid");
 
 module.exports = {
   Query: {
-    postPlacesToSee: async (_, { input }) => {
+    postBucketList: async (_, { input }) => {
       try {
         // checking database if the user exists
         const post = await Post.findOne({ postId: input.postId });
@@ -20,7 +20,7 @@ module.exports = {
         console.log(error);
       }
     },
-    postsPlacesToSee: async () => {
+    postsBucketList: async () => {
       try {
         // checking database if the users exists
         const posts = await Post.find();
@@ -35,7 +35,7 @@ module.exports = {
   },
 
   Mutation: {
-    createPlacesToSee: async (_, { input }, { userInfo }) => {
+    createBucketList: async (_, { input }, { userInfo }) => {
       try {
         // creating a new instance of the post model
         if (!userInfo) {
@@ -66,7 +66,7 @@ module.exports = {
 
         const postId = uuid.v4();
 
-        const newPost = new PlacesToSeePost({
+        const newPost = new BucketListPost({
           ...input,
           postId: postId,
           _user: user.id,
@@ -94,7 +94,7 @@ module.exports = {
       }
     },
 
-    updatePlacesToSee: async (_, { input }, { userInfo }) => {
+    updateBucketList: async (_, { input }, { userInfo }) => {
       console.log(userInfo);
       console.log(input);
       if (!userInfo) {
