@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node src/index",
+    "dev": "nodemon src/index",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
   },
   "author": "",
