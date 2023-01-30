@@ -97,6 +97,11 @@ module.exports = {
           _user: user.id,
         });
 
+        //     _user: {
+        //   id: user.id,
+        //   userId: user.userId,
+        // },
+
         await newPost.save();
 
         // update the user with posts
@@ -140,7 +145,7 @@ module.exports = {
 
       if (error) return error;
 
-      const { title, category, desc } = post;
+      const { title, category, desc } = input.post;
       if (!title && !category && !desc) {
         return {
           userErrors: [
@@ -153,22 +158,30 @@ module.exports = {
         };
       }
 
-      // const existingPost = await prisma.post.findUnique({
-      //   where: {
-      //     id: Number(postId),
-      //   },
-      // });
+      const existingPost = await Post.findOne({
+        postId: input.postId,
+      });
 
-      // if (!existingPost) {
-      //   return {
-      //     userErrors: [
-      //       {
-      //         message: "Post does not exist",
-      //       },
-      //     ],
-      //     post: null,
-      //   };
-      // }
+      if (!existingPost) {
+        return {
+          userErrors: [
+            {
+              message: "Post does not exist",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      // update the user with posts
+      const payloadToUpdate = { ...input };
+
+      const newPost = await Post.findOneAndUpdate(
+        input.postId,
+        payloadToUpdate
+      );
+
+      console.log(newPost);
 
       // let payloadToUpdate = {
       //   title,

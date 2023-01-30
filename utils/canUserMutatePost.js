@@ -18,9 +18,11 @@ const canUserMutatePost = async ({ userInfo, postId }) => {
 
   const post = await bucketList.findOne({ postId });
 
-  console.log(user._id);
-  console.log(post._user._id);
-  if (post?._user !== user._id) {
+  // console.log(post?._user);
+  // console.log(user._id);
+
+  // using Mongo equals method to compare two objectIDs
+  if (!post?._user.equals(user._id)) {
     return {
       userErrors: [
         {
