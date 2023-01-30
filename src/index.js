@@ -12,8 +12,8 @@ const resolvers = require("./graphql/resolvers");
 const getUserFromToken = require("./utils/getUserFromToken");
 const BoredAPI = require("./graphql/dataSources/bored-api");
 
-require("./database/models/User");
-require("./database/models/Survey");
+// require("./database/models/ser");
+// require("./database/models/Survey");
 
 const connection = require("./database");
 
