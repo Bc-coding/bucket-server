@@ -6,7 +6,7 @@ const keys = require("../../config/keys");
 const uuid = require("uuid");
 
 // Getting data from database
-const User = require("../../database/models/User");
+const User = require("../../database/models/user");
 // const User = mongoose.model("users");
 
 module.exports = {
