@@ -125,8 +125,9 @@ module.exports = {
     },
 
     updateBucketList: async (_, { input }, { userInfo }) => {
-      console.log(userInfo);
-      console.log(input);
+      const { postId, post } = input;
+      // console.log(userInfo);
+      // console.log(input);
       if (!userInfo) {
         return {
           userErrors: [
@@ -140,12 +141,12 @@ module.exports = {
 
       const error = await canUserMutatePost({
         userInfo,
-        postId: input.postId,
+        postId: postId,
       });
 
       if (error) return error;
 
-      const { title, category, desc } = input.post;
+      const { title, category, desc } = post;
       if (!title && !category && !desc) {
         return {
           userErrors: [
@@ -159,8 +160,10 @@ module.exports = {
       }
 
       const existingPost = await Post.findOne({
-        postId: input.postId,
+        _id: postId,
       });
+
+      console.log(existingPost);
 
       if (!existingPost) {
         return {
@@ -174,34 +177,22 @@ module.exports = {
       }
 
       // update the user with posts
-      const payloadToUpdate = { ...input };
+      const payloadToUpdate = { ...post };
 
       const newPost = await Post.findOneAndUpdate(
-        input.postId,
-        payloadToUpdate
+        existingPost._id,
+        payloadToUpdate,
+        {
+          new: true,
+        }
       );
 
       console.log(newPost);
 
-      // let payloadToUpdate = {
-      //   title,
-      //   content,
-      // };
-
-      // if (!title) delete payloadToUpdate.title;
-      // if (!content) delete payloadToUpdate.content;
-
-      // return {
-      //   userErrors: [],
-      //   post: prisma.post.update({
-      //     data: {
-      //       ...payloadToUpdate,
-      //     },
-      //     where: {
-      //       id: Number(postId),
-      //     },
-      //   }),
-      // };
+      return {
+        userErrors: [],
+        post: newPost,
+      };
     },
   },
 };

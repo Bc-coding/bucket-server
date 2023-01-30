@@ -16,7 +16,10 @@ const canUserMutatePost = async ({ userInfo, postId }) => {
     };
   }
 
-  const post = await bucketList.findOne({ postId });
+  const post = await bucketList.findOne({ _id: postId });
+  // console.log(postId);
+
+  // console.log(post);
 
   // console.log(post?._user);
   // console.log(user._id);

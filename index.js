@@ -63,7 +63,7 @@ async function startApolloServer(typeDefs, resolvers) {
       context: async ({ req, res }) => {
         const { cache } = server;
 
-        console.log(req.headers.authorization);
+        // console.log(req.headers.authorization);
         const userInfo = await getUserFromToken(req.headers.authorization);
         // console.log(userInfo);
 
