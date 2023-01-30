@@ -78,7 +78,9 @@ async function startApolloServer(typeDefs, resolvers) {
   );
 
   // Modified server startup
-  await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise(resolve =>
+    httpServer.listen({ port: process.env.PORT || 4000 }, resolve)
+  );
   console.log(`🚀 Apollo Server ready at http://localhost:4000/`);
 }
 
