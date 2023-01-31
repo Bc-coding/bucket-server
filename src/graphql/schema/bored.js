@@ -8,8 +8,8 @@ module.exports = `
     activity: String
     accessibility: String
     type: String
-    participants: Int
-    price: Int
+    participants:  String
+    price: String
     link: String
     key: String
   }
