@@ -6,7 +6,7 @@ module.exports = `
 
   type activityPayload {
     activity: String
-    accessibility: Int
+    accessibility: String
     type: String
     participants: Int
     price: Int
