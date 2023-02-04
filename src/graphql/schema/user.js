@@ -6,7 +6,7 @@ module.exports = `
 
   extend type Mutation {
     signup(input: signupInput):User
-    login(input: loginInput): Token
+    login(input: loginInput): LoginPayload
   }
 
   ###### TYPE ######
@@ -21,6 +21,16 @@ module.exports = `
 
   type Token {
     token: String!
+  }
+
+  type LoginPayload {
+    userErrors: [UserError]!
+    token: String
+    user: User
+  }
+
+   type UserError {
+    message: String!
   }
 
   ###### INPUT #####

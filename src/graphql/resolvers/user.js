@@ -54,8 +54,7 @@ module.exports = {
           userId: uuid.v4(),
         });
         const result = await newUser.save();
-        // console.log(result._id, typeof result._id);
-        // console.log(result.id, typeof result.id);
+
         return result;
       } catch (error) {
         console.log(error);
@@ -66,7 +65,16 @@ module.exports = {
       try {
         const user = await User.findOne({ email: input.email });
         if (!user) {
-          throw new Error("User not found");
+          // throw new Error("User not found");
+          return {
+            userErrors: [
+              {
+                message: "User not found",
+              },
+            ],
+            token: null,
+            user: null,
+          };
         }
         const isPasswordValid = await bcrypt.compare(
           input.password,
@@ -74,7 +82,16 @@ module.exports = {
         );
 
         if (!isPasswordValid) {
-          throw new Error("Incorrect Password");
+          // throw new Error("Incorrect Password");
+          return {
+            userErrors: [
+              {
+                message: "Incorrect Password",
+              },
+            ],
+            token: null,
+            user: null,
+          };
         }
         // const secret = process.env.JWT_SECRET_KEY || "password";
         const secret = keys.jwtSinganiture;
@@ -85,9 +102,14 @@ module.exports = {
 
         const token = jwt.sign({ email: user.email }, secret);
 
-        return { token: token };
+        return {
+          userErrors: [],
+          token: token,
+          user: user,
+        };
       } catch (error) {
-        throw new Error("User not found");
+        console.log(error);
+        throw error;
       }
     },
   },
