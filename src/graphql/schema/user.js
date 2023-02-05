@@ -1,12 +1,12 @@
 module.exports = `
   extend type Query {
-    user(input: emailInput): User!
+    user(input: emailInput): UserPayload!
     users: [User!]!
   }
 
   extend type Mutation {
-    signup(input: signupInput):SingupPayload
-    login(input: loginInput): LoginPayload
+    signup(input: signupInput): SingupPayload!
+    login(input: loginInput): LoginPayload!
   }
 
   ###### TYPE ######
@@ -21,6 +21,11 @@ module.exports = `
 
   type Token {
     token: String!
+  }
+
+  type UserPayload {
+    userErrors: [UserError]!
+    user: User
   }
 
   type SingupPayload {

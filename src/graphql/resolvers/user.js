@@ -16,9 +16,22 @@ module.exports = {
         // checking database if the user exists
         const user = await User.findOne({ email: input.email });
         if (!user) {
-          throw new Error("User not found!");
+          // throw new Error("User not found!");
+
+          return {
+            userErrors: [
+              {
+                message: "User not found!",
+              },
+            ],
+            user: null,
+          };
         }
-        return user;
+
+        return {
+          userErrors: [],
+          user: user,
+        };
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +63,6 @@ module.exports = {
                 message: "Email already in use",
               },
             ],
-            token: null,
             user: null,
           };
         }
