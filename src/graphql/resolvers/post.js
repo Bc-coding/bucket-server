@@ -185,7 +185,9 @@ module.exports = {
         {
           new: true,
         }
-      );
+      )
+        .populate("_user")
+        .exec();
 
       console.log(newPost);
 
