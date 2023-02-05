@@ -43,7 +43,16 @@ module.exports = {
 
         const user = await User.findOne({ email: input.email });
         if (user) {
-          throw new Error("Email already in use");
+          // throw new Error("Email already in use");
+          return {
+            userErrors: [
+              {
+                message: "Email already in use",
+              },
+            ],
+            token: null,
+            user: null,
+          };
         }
         const hashedPassword = await bcrypt.hash(input.password, 12);
         // creating a new instance of the user model
@@ -55,7 +64,10 @@ module.exports = {
         });
         const result = await newUser.save();
 
-        return result;
+        return {
+          userErrors: [],
+          user: result,
+        };
       } catch (error) {
         console.log(error);
         throw error;
@@ -93,7 +105,7 @@ module.exports = {
             user: null,
           };
         }
-        // const secret = process.env.JWT_SECRET_KEY || "password";
+
         const secret = keys.jwtSinganiture;
 
         // const token = jwt.sign({ email: user.email }, "password", {

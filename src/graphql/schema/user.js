@@ -5,7 +5,7 @@ module.exports = `
   }
 
   extend type Mutation {
-    signup(input: signupInput):User
+    signup(input: signupInput):SingupPayload
     login(input: loginInput): LoginPayload
   }
 
@@ -23,11 +23,17 @@ module.exports = `
     token: String!
   }
 
+  type SingupPayload {
+    userErrors: [UserError]!
+    user: User
+  }
+
   type LoginPayload {
     userErrors: [UserError]!
     token: String
     user: User
   }
+
 
    type UserError {
     message: String!
