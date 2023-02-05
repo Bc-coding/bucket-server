@@ -1,7 +1,7 @@
 module.exports = `
   extend type Query {
     user(input: emailInput): UserPayload!
-    users: [User!]!
+    users: UsersPayload!
   }
 
   extend type Mutation {
@@ -26,6 +26,11 @@ module.exports = `
   type UserPayload {
     userErrors: [UserError]!
     user: User
+  }
+
+  type UsersPayload {
+    userErrors: [UserError]!
+    users: [User!]!
   }
 
   type SingupPayload {

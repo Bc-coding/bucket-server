@@ -27,7 +27,6 @@ module.exports = {
             user: null,
           };
         }
-
         return {
           userErrors: [],
           user: user,
@@ -41,9 +40,19 @@ module.exports = {
         // checking database if the users exists
         const users = await User.find();
         if (!users) {
-          throw new Error("Users not found!");
+          return {
+            userErrors: [
+              {
+                message: "Users not found!",
+              },
+            ],
+            users: null,
+          };
         }
-        return users;
+        return {
+          userErrors: [],
+          users: users,
+        };
       } catch (error) {
         console.log(error);
       }
