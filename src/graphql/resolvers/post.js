@@ -123,7 +123,6 @@ module.exports = {
         throw error;
       }
     },
-
     updateBucketList: async (_, { input }, { userInfo }) => {
       const { postId, post } = input;
       // console.log(userInfo);
@@ -194,6 +193,56 @@ module.exports = {
       return {
         userErrors: [],
         post: newPost,
+      };
+    },
+    deleteBucketList: async (_, { input }, { userInfo }) => {
+      const { postId } = input;
+      // console.log(userInfo);
+      // console.log(input);
+      if (!userInfo) {
+        return {
+          userErrors: [
+            {
+              message: "Forbidden access",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      const error = await canUserMutatePost({
+        userInfo,
+        postId: postId,
+      });
+
+      if (error) return error;
+
+      const existingPost = await Post.findOne({
+        _id: postId,
+      });
+
+      console.log(existingPost);
+
+      if (!existingPost) {
+        return {
+          userErrors: [
+            {
+              message: "Post does not exist",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      const deletedPost = await Post.findOneAndDelete(existingPost._id)
+        .populate("_user")
+        .exec();
+
+      // console.log(deletedPost);
+
+      return {
+        userErrors: [],
+        post: deletedPost,
       };
     },
   },

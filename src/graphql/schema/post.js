@@ -1,11 +1,12 @@
 module.exports = `
  extend type Query {
-    getPostBucketList(input: postIdInput):  BucketListPostPayload!
+    getPostBucketList(input: PostIdInput):  BucketListPostPayload!
     getPostsBucketList: [BucketListPostPayload!]!
   }
 extend type Mutation {
-    createBucketList(input: bucketListCreateInput):BucketListPostPayload!
-    updateBucketList(input: bucketListUpdateInput):BucketListPostPayload!
+    createBucketList(input: BucketListCreateInput):BucketListPostPayload!
+    updateBucketList(input: BucketListUpdateInput):BucketListPostPayload!
+    deleteBucketList(input: PostIdInput): BucketListPostPayload!
   }
 
   type BucketListPostPayload {
@@ -39,7 +40,7 @@ extend type Mutation {
     # posts: [Post!]
   }
 
-  input bucketListCreateInput {
+  input BucketListCreateInput {
     title: String!
     category: String!
     desc: String!
@@ -49,12 +50,14 @@ extend type Mutation {
     memo: String
   }
 
-  input bucketListUpdateInput {
+  input BucketListUpdateInput {
     postId: String!
-    post: bucketListCreateInput!
+    post: BucketListCreateInput!
   }
 
-  input postIdInput {
+
+
+  input PostIdInput {
     postId: String!
   }
 `;
