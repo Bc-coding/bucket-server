@@ -9,16 +9,33 @@ const uuid = require("uuid");
 module.exports = {
   Query: {
     // get a post from bucket list by its postId
-    getPostBucketList: async (_, { input }) => {
+    getPostBucketList: async (_, { input }, { userInfo }) => {
       try {
-        // checking database if the user exists
+        // Check if the user is logged in
+        if (!userInfo) {
+          return {
+            userErrors: [
+              {
+                message: "Forbidden access",
+              },
+            ],
+            post: null,
+          };
+        }
 
-        const post = await Post.findOne({ postId: input.postId })
+        const post = await Post.findOne({ id: input.postId })
           .populate("_user")
           .exec();
 
         if (!post) {
-          throw new Error("Post not found!");
+          return {
+            userErrors: [
+              {
+                message: "Post not found",
+              },
+            ],
+            post: null,
+          };
         }
         return {
           userErrors: [
@@ -32,31 +49,47 @@ module.exports = {
         console.log(error);
       }
     },
-    getPostsBucketList: async () => {
-      try {
-        // get a list of posts from database
-        const posts = await Post.find().populate("_user").exec();
+    // TODO!
+    // readAllBucketList: async (_, __, { userInfo }) => {
+    //   // console.log(userInfo);
+    //   // console.log(input);
+    //   if (!userInfo) {
+    //     return {
+    //       userErrors: [
+    //         {
+    //           message: "Forbidden access",
+    //         },
+    //       ],
+    //       post: null,
+    //     };
+    //   }
 
-        if (!posts) {
-          throw new Error("Posts not found!");
-        }
-        // Formatting the result in accordance with the schema [postsBuckletListPayload!]!
-        const newPosts = posts.map(post => {
-          return {
-            userErrors: [
-              {
-                message: "null",
-              },
-            ],
-            post: post,
-          };
-        });
+    //   const user = await User.findOne({ email: userInfo.email });
 
-        return newPosts;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    //   const existingPosts = await Post.find({
+    //     _user: {
+    //       id: user.id,
+    //     },
+    //   });
+
+    //   console.log(existingPosts);
+
+    //   if (!existingPosts) {
+    //     return {
+    //       userErrors: [
+    //         {
+    //           message: "Posts do not exist",
+    //         },
+    //       ],
+    //       post: null,
+    //     };
+    //   }
+
+    //   return {
+    //     userErrors: [],
+    //     post: existingPosts,
+    //   };
+    // },
   },
 
   Mutation: {

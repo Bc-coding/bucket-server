@@ -1,7 +1,7 @@
 module.exports = `
  extend type Query {
     getPostBucketList(input: PostIdInput):  BucketListPostPayload!
-    getPostsBucketList: [BucketListPostPayload!]!
+    readAllBucketList: [BucketListPostPayload!]!
   }
 extend type Mutation {
     createBucketList(input: BucketListCreateInput):BucketListPostPayload!
