@@ -50,46 +50,58 @@ module.exports = {
       }
     },
     // TODO!
-    // readAllBucketList: async (_, __, { userInfo }) => {
-    //   // console.log(userInfo);
-    //   // console.log(input);
-    //   if (!userInfo) {
-    //     return {
-    //       userErrors: [
-    //         {
-    //           message: "Forbidden access",
-    //         },
-    //       ],
-    //       post: null,
-    //     };
-    //   }
+    readAllBucketList: async (_, __, { userInfo }) => {
+      if (!userInfo) {
+        return {
+          userErrors: [
+            {
+              message: "Forbidden access",
+            },
+          ],
+          post: null,
+        };
+      }
 
-    //   const user = await User.findOne({ email: userInfo.email });
+      const user = await User.findOne({ email: userInfo.email });
 
-    //   const existingPosts = await Post.find({
-    //     _user: {
-    //       id: user.id,
-    //     },
-    //   });
+      const filter = {
+        _user: user._id,
+      };
 
-    //   console.log(existingPosts);
+      // console.log(filter);
 
-    //   if (!existingPosts) {
-    //     return {
-    //       userErrors: [
-    //         {
-    //           message: "Posts do not exist",
-    //         },
-    //       ],
-    //       post: null,
-    //     };
-    //   }
+      const existingPosts = await Post.aggregate([{ $match: filter }]);
 
-    //   return {
-    //     userErrors: [],
-    //     post: existingPosts,
-    //   };
-    // },
+      // console.log(existingPosts);
+
+      if (!existingPosts) {
+        return {
+          userErrors: [
+            {
+              message: "Posts do not exist",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      const formatted = [];
+
+      existingPosts.map(item => {
+        const newPost = {
+          userErrors: [],
+          post: item,
+        };
+        formatted.push(newPost);
+      });
+
+      console.log(formatted);
+
+      return {
+        userErrors: [],
+        posts: formatted,
+      };
+    },
   },
 
   Mutation: {

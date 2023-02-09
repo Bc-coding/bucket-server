@@ -27,6 +27,9 @@ const bucketListSchema = new Schema(
     memo: {
       type: String,
     },
+    emoji: {
+      type: String,
+    },
     // creating a relationship to a particular user -- the survey belongs to the user
     // _ the underscore means a reference field
     _user: {

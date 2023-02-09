@@ -1,7 +1,7 @@
 module.exports = `
  extend type Query {
     getPostBucketList(input: PostIdInput):  BucketListPostPayload!
-    readAllBucketList: [BucketListPostPayload!]!
+    readAllBucketList: AllBucketListPostPayload
   }
 extend type Mutation {
     createBucketList(input: BucketListCreateInput):BucketListPostPayload!
@@ -12,6 +12,11 @@ extend type Mutation {
   type BucketListPostPayload {
     userErrors: [UserError!]!
     post: BucketListPost
+  }
+
+  type AllBucketListPostPayload {
+    userErrors: [UserError]!
+    posts: [BucketListPostPayload!]
   }
 
   type UserError {
@@ -28,6 +33,7 @@ extend type Mutation {
     completed: Boolean
     date: String
     memo: String
+    emoji: String
     createdAt: String!
     updatedAt: String!
     _user: User
@@ -48,6 +54,7 @@ extend type Mutation {
     completed: Boolean
     date: String
     memo: String
+    emoji: String
   }
 
   input BucketListUpdateInput {
