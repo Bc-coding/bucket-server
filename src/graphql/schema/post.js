@@ -16,7 +16,7 @@ extend type Mutation {
 
   type AllBucketListPostPayload {
     userErrors: [UserError]!
-    posts: [BucketListPostPayload!]
+    posts: [BucketListPostNew!]
   }
 
   type UserError {
@@ -37,6 +37,22 @@ extend type Mutation {
     createdAt: String!
     updatedAt: String!
     _user: User
+  }
+
+    type BucketListPostNew {
+    id: String
+    postId: String!
+    title: String!
+    category: String!
+    desc: String!
+    location: String
+    completed: Boolean
+    date: String
+    memo: String
+    emoji: String
+    createdAt: String!
+    updatedAt: String!
+    userId: ID
   }
 
   type User {

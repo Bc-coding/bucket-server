@@ -49,7 +49,6 @@ module.exports = {
         console.log(error);
       }
     },
-    // TODO!
     readAllBucketList: async (_, __, { userInfo }) => {
       if (!userInfo) {
         return {
@@ -68,11 +67,17 @@ module.exports = {
         _user: user._id,
       };
 
-      // console.log(filter);
-
-      const existingPosts = await Post.aggregate([{ $match: filter }]);
-
-      // console.log(existingPosts);
+      const existingPosts = await Post.aggregate([
+        { $match: filter },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+      ]);
 
       if (!existingPosts) {
         return {
@@ -85,21 +90,15 @@ module.exports = {
         };
       }
 
-      const formatted = [];
-
       existingPosts.map(item => {
-        const newPost = {
-          userErrors: [],
-          post: item,
-        };
-        formatted.push(newPost);
+        // Formatting the response
+        item.id = item._id.toString();
+        item.userId = item._user.toString();
       });
-
-      console.log(formatted);
 
       return {
         userErrors: [],
-        posts: formatted,
+        posts: existingPosts,
       };
     },
   },

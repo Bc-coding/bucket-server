@@ -31,12 +31,12 @@ connection();
 // }
 
 async function startApolloServer(typeDefs, resolvers) {
-  const app2 = express();
+  const app = express();
 
   // Our httpServer handles incoming requests to our Express app.
   // Below, we tell Apollo Server to "drain" this httpServer,
   // enabling our servers to shut down gracefully.
-  const httpServer = http.createServer(app2);
+  const httpServer = http.createServer(app);
 
   // Same ApolloServer initialization as before, plus the drain plugin
   // for our httpServer.
@@ -51,7 +51,7 @@ async function startApolloServer(typeDefs, resolvers) {
 
   // Set up our Express middleware to handle CORS, body parsing,
   // and our expressMiddleware function.
-  app2.use(
+  app.use(
     "/",
     cors(),
     // 50mb is the limit that `startStandaloneServer` uses, but you may configure this to suit your needs
@@ -59,7 +59,6 @@ async function startApolloServer(typeDefs, resolvers) {
     // expressMiddleware accepts the same arguments:
     // an Apollo Server instance and optional configuration options
     expressMiddleware(server, {
-      // context: async ({ req }) => ({ token: req.headers.token }),
       context: async ({ req, res }) => {
         const { cache } = server;
 
