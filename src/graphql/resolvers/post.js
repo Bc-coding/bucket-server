@@ -189,24 +189,24 @@ module.exports = {
 
       if (error) return error;
 
-      const { title, category, desc } = post;
-      if (!title && !category && !desc) {
-        return {
-          userErrors: [
-            {
-              message:
-                "you must provide either a title, category and description to update a post",
-            },
-          ],
-          post: null,
-        };
-      }
+      // const { title, category, desc } = post;
+      // if (!title && !category && !desc) {
+      //   return {
+      //     userErrors: [
+      //       {
+      //         message:
+      //           "you must provide either a title, category and description to update a post",
+      //       },
+      //     ],
+      //     post: null,
+      //   };
+      // }
 
       const existingPost = await Post.findOne({
         _id: postId,
       });
 
-      console.log(existingPost);
+      // console.log(existingPost);
 
       if (!existingPost) {
         return {
@@ -232,7 +232,7 @@ module.exports = {
         .populate("_user")
         .exec();
 
-      console.log(newPost);
+      // console.log(newPost);
 
       return {
         userErrors: [],
@@ -265,7 +265,7 @@ module.exports = {
         _id: postId,
       });
 
-      console.log(existingPost);
+      // console.log(existingPost);
 
       if (!existingPost) {
         return {

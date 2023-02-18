@@ -73,9 +73,20 @@ extend type Mutation {
     emoji: String
   }
 
+  input BucketListUpdateInputPost {
+    title: String
+    category: String
+    desc: String
+    location: String
+    completed: Boolean
+    date: String
+    memo: String
+    emoji: String
+  }
+
   input BucketListUpdateInput {
     postId: String!
-    post: BucketListCreateInput!
+    post: BucketListUpdateInputPost!
   }
 
 
