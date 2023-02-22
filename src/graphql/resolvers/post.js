@@ -38,11 +38,7 @@ module.exports = {
           };
         }
         return {
-          userErrors: [
-            {
-              message: "null",
-            },
-          ],
+          userErrors: [],
           post: post,
         };
       } catch (error) {
