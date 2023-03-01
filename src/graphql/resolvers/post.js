@@ -23,9 +23,11 @@ module.exports = {
           };
         }
 
-        const post = await Post.findOne({ id: input.postId })
+        const post = await Post.findOne({ _id: input.postId })
           .populate("_user")
           .exec();
+
+        // console.log(post);
 
         if (!post) {
           return {
