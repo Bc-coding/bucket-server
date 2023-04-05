@@ -158,5 +158,56 @@ module.exports = {
         throw error;
       }
     },
+    verifyEmail: async (_, { input }) => {
+      try {
+        const user = await User.findOne({
+          confirmationCode: input.confirmationCode,
+        });
+        if (!user) {
+          // throw new Error("User not found");
+          return {
+            userErrors: [
+              {
+                message: "User not found",
+              },
+            ],
+            token: null,
+            user: null,
+          };
+        }
+
+        if (user.status === "Pending") {
+          const payloadToUpdate = { status: "Active" };
+
+          const newUser = await User.findOneAndUpdate(
+            user._id,
+            payloadToUpdate,
+            {
+              new: true,
+            }
+          );
+
+          const result = await newUser.save();
+
+          return {
+            userErrors: [],
+            user: result,
+          };
+        } else {
+          return {
+            userErrors: [
+              {
+                message: "Account is already confirmed",
+              },
+            ],
+
+            user: null,
+          };
+        }
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
   },
 };

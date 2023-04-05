@@ -187,19 +187,6 @@ module.exports = {
 
       if (error) return error;
 
-      // const { title, category, desc } = post;
-      // if (!title && !category && !desc) {
-      //   return {
-      //     userErrors: [
-      //       {
-      //         message:
-      //           "you must provide either a title, category and description to update a post",
-      //       },
-      //     ],
-      //     post: null,
-      //   };
-      // }
-
       const existingPost = await Post.findOne({
         _id: postId,
       });

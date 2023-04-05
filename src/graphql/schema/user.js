@@ -7,6 +7,7 @@ module.exports = `
   extend type Mutation {
     signup(input: signupInput): SingupPayload!
     login(input: loginInput): LoginPayload!
+    verifyEmail(input: confirmationCodeInput): verifyEmailPayload!
   }
 
   ###### TYPE ######
@@ -44,6 +45,10 @@ module.exports = `
     user: User
   }
 
+  type verifyEmailPayload {
+    userErrors: [UserError]!
+    user: User
+  }
 
    type UserError {
     message: String!
@@ -63,5 +68,9 @@ module.exports = `
 
   input emailInput {
     email: String!
+  }
+
+  input confirmationCodeInput {
+    confirmationCode: String!
   }
 `;
