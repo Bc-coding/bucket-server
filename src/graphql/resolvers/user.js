@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const keys = require("../../config/keys");
 const uuid = require("uuid");
+const nodemailer = require("../../nodemailer/transport");
 
 // Getting data from database
 const User = require("../../database/models/user");
@@ -76,14 +77,26 @@ module.exports = {
           };
         }
         const hashedPassword = await bcrypt.hash(input.password, 12);
+
+        const characters =
+          "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let token = "";
+        for (let i = 0; i < 25; i++) {
+          token += characters[Math.floor(Math.random() * characters.length)];
+        }
+
         // creating a new instance of the user model
         // then overwrite the password with hashed password
         const newUser = new User({
           ...input,
           password: hashedPassword,
           userId: uuid.v4(),
+          confirmationCode: token,
         });
+
         const result = await newUser.save();
+
+        nodemailer.sendConfirmationEmail(input.name, input.email, token);
 
         return {
           userErrors: [],

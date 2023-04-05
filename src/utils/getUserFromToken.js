@@ -2,7 +2,7 @@ const JWT = require("jsonwebtoken");
 const keys = require("../config/keys");
 
 const getUserFromToken = token => {
-  console.log(token);
+  // console.log(token);
   const secret = keys.jwtSinganiture;
   try {
     const decoded = JWT.verify(token, secret);

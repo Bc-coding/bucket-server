@@ -22,6 +22,15 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     posts: [String],
+    status: {
+      type: String,
+      enum: ["Pending", "Active"],
+      default: "Pending",
+    },
+    confirmationCode: {
+      type: String,
+      unique: true,
+    },
   },
   // the timestamps will automatically have created_at and updated_at fields
   {

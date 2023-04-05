@@ -24,6 +24,7 @@
     "graphql-resolvers": "^0.4.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.2",
+    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.20",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0",
