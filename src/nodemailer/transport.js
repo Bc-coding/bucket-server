@@ -15,9 +15,9 @@ let transport = nodemailer.createTransport({
 });
 
 module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
-  console.log("check");
+  // console.log("check");
 
-  console.log(confirmationCode);
+  //console.log("email sent: " + confirmationCode);
 
   transport
     .sendMail({
@@ -30,5 +30,5 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
     <p>Thank you for joining bucket list. Please confirm your email by clicking on the following link</p>
     <a href="http://127.0.0.1:5173/confirm/${confirmationCode}">Click here</a>`,
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };

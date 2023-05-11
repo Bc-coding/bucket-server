@@ -18,6 +18,7 @@ module.exports = `
     email: String!
     createdAt: String!
     updatedAt: String!
+    status: String
   }
 
   type Token {

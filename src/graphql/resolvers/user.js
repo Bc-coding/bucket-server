@@ -159,6 +159,7 @@ module.exports = {
       }
     },
     verifyEmail: async (_, { input }) => {
+      // console.log(input);
       try {
         const user = await User.findOne({
           confirmationCode: input.confirmationCode,
